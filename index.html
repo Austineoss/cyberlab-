@@ -1,0 +1,98 @@
+cat > index.html <<'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+<title>CyberLab DNS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+background:#080d12;
+color:#00ff99;
+font-family:monospace;
+text-align:center;
+padding:20px;
+}
+.box {
+background:#263746;
+padding:25px;
+margin:20px auto;
+border-radius:12px;
+max-width:500px;
+}
+input,button {
+padding:14px;
+margin:10px;
+border-radius:6px;
+border:none;
+}
+input {width:80%;}
+button {
+background:#00dd88;
+color:black;
+}
+#result {margin:20px;font-size:17px;}
+</style>
+</head>
+<body>
+
+<h1>CYBERLAB DNS</h1>
+<p>Local Cybersecurity Training Dashboard</p>
+
+<div class="box">
+<h2>DNS LOOKUP</h2>
+<input id="domain" placeholder="Enter domain name">
+<br>
+<button onclick="lookup()">Search Domain</button>
+<div id="result">Waiting...</div>
+</div>
+
+<div class="box">
+<h2>Normal DNS</h2>
+<button onclick="normalDNS()">Test Normal DNS</button>
+<p id="normal">Waiting...</p>
+</div>
+
+<div class="box">
+<h2>Suspicious DNS</h2>
+<button onclick="fakeDNS()">Simulate Suspicious DNS</button>
+<p id="fake">Waiting...</p>
+</div>
+
+<script>
+function lookup() {
+let name = document.getElementById("domain").value.trim().toLowerCase();
+let result = document.getElementById("result");
+
+let domains = {
+"cyberlab.test":"127.0.0.1",
+"normal.test":"192.0.2.10",
+"example.test":"192.0.2.20"
+};
+
+if (!name) {
+result.innerHTML = "Enter a domain name.";
+return;
+}
+
+if (domains[name]) {
+result.innerHTML = "DOMAIN FOUND<br>Domain: " + name +
+"<br>Simulated IP: " + domains[name];
+} else {
+result.innerHTML = "DOMAIN NOT FOUND (LOCAL SIMULATION)";
+}
+}
+
+function normalDNS() {
+document.getElementById("normal").innerHTML =
+"Expected IP: 192.0.2.10<br>Status: Normal (simulated)";
+}
+
+function fakeDNS() {
+document.getElementById("fake").innerHTML =
+"Unexpected IP: 198.51.100.25<br>Status: Suspicious (simulated)";
+}
+</script>
+
+</body>
+</html>
+EOF
